@@ -22,7 +22,7 @@ func makeQRFromStdin() error {
 		return err
 	}
 
-	kr, err := encoder.MakeQRKeyRegRequest(encodedTxn)
+	kr, err := encoder.MakeQRKeyRegRequestEncodedTxn(encodedTxn)
 	if err != nil {
 		return err
 	}

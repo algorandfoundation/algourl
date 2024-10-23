@@ -17,8 +17,8 @@ type AUrlTxn struct {
 }
 
 type AUrlTxnKeyCommon struct {
-	Sender string `url:"-"`
-	Type   string `url:"type"`
+	Sender string  `url:"-"`
+	Type   string  `url:"type"`
 	Fee    *uint64 `url:"fee,omitempty"`
 }
 
@@ -54,7 +54,7 @@ type RawTxn struct {
 	Txn types.Transaction `codec:"txn"`
 }
 
-func MakeQRKeyRegRequest(encodedTxn []byte) (*AUrlTxn, error) {
+func MakeQRKeyRegRequestEncodedTxn(encodedTxn []byte) (*AUrlTxn, error) {
 	var txn RawTxn
 
 	msgpack.Decode(encodedTxn, &txn)
@@ -62,6 +62,10 @@ func MakeQRKeyRegRequest(encodedTxn []byte) (*AUrlTxn, error) {
 		return nil, fmt.Errorf("no support for transaction of type '%s'", txn.Txn.Type)
 	}
 
+	return MakeQRKeyRegRequest(txn)
+}
+
+func MakeQRKeyRegRequest(txn RawTxn) (*AUrlTxn, error) {
 	kr := &AUrlTxn{
 		AUrlTxnKeyCommon: AUrlTxnKeyCommon{
 			Sender: txn.Txn.Sender.String(),
@@ -77,7 +81,7 @@ func MakeQRKeyRegRequest(encodedTxn []byte) (*AUrlTxn, error) {
 		},
 	}
 	if uint64(txn.Txn.Fee) != uint64(1000) {
-		kr.AUrlTxnKeyCommon.Fee =	toPtr(uint64(txn.Txn.Fee))
+		kr.AUrlTxnKeyCommon.Fee = toPtr(uint64(txn.Txn.Fee))
 	}
 
 	return kr, nil
