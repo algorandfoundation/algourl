@@ -1,4 +1,4 @@
-module github.com/algonode/algourl
+module github.com/algorandfoundation/algourl
 
 go 1.21
 
