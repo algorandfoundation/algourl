@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/algonode/algourl/encoder"
+	"github.com/algorandfoundation/algourl/encoder"
 )
 
 func main() {
